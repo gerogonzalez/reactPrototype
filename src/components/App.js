@@ -9,7 +9,6 @@ class App extends React.Component {
   }; 
   
   sessionIDRef = React.createRef();
-  domainRef = React.createRef();
   DFTRef = React.createRef();
   FSRRef = React.createRef();
   BDTRef = React.createRef();
@@ -24,13 +23,9 @@ class App extends React.Component {
   getSessionStepData = (key, event) => {
     const info = {
       sessionID: this.sessionIDRef.current.value,
-      domain: this.domainRef.current.value,
       step: key
     };
     
-    const cookies = new Cookies();
-    cookies.remove('ASP.NET_SessionId');
-    cookies.set('ASP.NET_SessionId', `${info.sessionID}`, { path: '/'});  
     const headersTest = new Headers();
     headersTest.set("Cookie", `ASP.NET_SessionId=${info.sessionID}; path=/; domain=localhost; Expires=Tue, 19 Jan 2038 03:14:07 GMT;`);
 
@@ -62,18 +57,23 @@ class App extends React.Component {
               console.log(error);
             }
           );
+  }; 
+
+  setSessionCookie = (key, event) => {
+    const info = {
+      sessionID: this.sessionIDRef.current.value,
+      step: key
+    };     
+    const cookies = new Cookies();
+    cookies.remove('ASP.NET_SessionId');
+    cookies.set('ASP.NET_SessionId', `${info.sessionID}`, { path: '/'}); 
   };
 
   getSessionData = (key, event) => {
     const info = {
       sessionID: this.sessionIDRef.current.value,
-      domain: this.domainRef.current.value,
       step: key
     };
-    
-    const cookies = new Cookies();
-    cookies.remove('ASP.NET_SessionId');
-    cookies.set('ASP.NET_SessionId', `${info.sessionID}`, { path: '/'});  
     const headersTest = new Headers();
     headersTest.set("Cookie", `ASP.NET_SessionId=${info.sessionID}; path=/; domain=localhost; Expires=Tue, 19 Jan 2038 03:14:07 GMT;`);
 
@@ -148,15 +148,13 @@ class App extends React.Component {
               <li><button type="button" className="menu-item" onClick={() => this.getSessionStepData("ADP")}>P3.5</button></li>
               <li><button type="button" className="menu-item" onClick={() => this.getSessionStepData("PAY")}>P4</button></li>
               <li><button type="button" className="menu-item" onClick={() => this.getSessionStepData("COA")}>P5</button></li>
-              <li><button type="button" className="menu-item" onClick={() => this.getSessionData()}>SessionData</button></li>
+              <li><button type="button" className="menu-item" onClick={() => this.getSessionData()}>SD</button></li>
             </ul>
           </div>
           <div className="table-right">
             <div className="row">
               <span className="mr5">Session ID</span><input type="text" size="50" name="sessionID" ref={this.sessionIDRef} required/>
-            </div>
-            <div className="row">
-              <span className="mr5">Domain</span><input type="text" size="50" name="domain" ref={this.domainRef} required/>
+              <button type="button" onClick={() => this.setSessionCookie()}>SetCookie</button>
             </div>
             <div className="row">
               <textarea 
