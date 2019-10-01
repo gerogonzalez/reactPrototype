@@ -1,0 +1,244 @@
+// Import all partials
+@require './_*.styl'
+
+
+header.top
+  text-align center
+  h1
+    font-size 14.4rem
+    line-height 0.7 // this font has a wacky baseline
+    display flex
+    justify-content: center;
+
+    // This is a bunch of goofy CSS to make the logo look decent
+    .ofThe
+      display flex
+      font-size 3rem
+      color orange
+      justify-content: center;
+      align-items: center;
+      background url('images/anchor.svg') center no-repeat;
+      background-size cover
+      padding 0 1rem
+      .of
+        padding-right 2rem
+        position relative
+        right -0.5rem
+  h3
+    margin 0
+    font-size 2rem
+    color orange
+    position relative
+    display inline-block
+    span
+      background white
+      position relative
+      z-index 2
+      padding-left 1rem
+      padding-right 1rem
+    &:before, &:after
+      display block
+      z-index 1
+      background black
+      position absolute
+      width 130%
+      height 1px
+      content ''
+      top 5px
+      margin-left -15%
+    &:after
+      top auto
+      bottom 7px
+
+
+
+label[for="fold"]
+  position absolute
+  top 1rem
+  left 1rem
+  text-transform uppercase
+  font-size 1.3rem
+  background black
+  color white
+  border 2px solid black
+  cursor pointer
+  padding 0.5rem 1rem
+
+input#fold
+  display none
+  &:checked + label
+    background white
+    color black
+
+ul
+  list-style none
+  margin 0
+  padding 0
+
+ul.order
+  // Default state
+  li
+    border-bottom 1px solid black
+    padding 2rem 0
+    display flex
+    font-size 1.4rem
+    justify-content space-between
+    align-items center
+
+    > span
+      width 100%
+      display flex
+      justify-content flex-start
+
+      span
+        &.price
+          font-size inherit 
+          margin-left: auto
+
+    &:hover
+      button
+        display inline
+        margin-left 5px
+
+    button
+      border 0
+      padding 0
+      display none
+      line-height 1
+
+    &.unavailable
+      text-decoration line-through
+      background lighten(red, 80%)
+    .price
+      font-size 1.2rem
+    span.count
+      position relative
+      overflow hidden
+      float left // only works if it's floated?!
+      span
+        display inline-block
+        // transition all 0.5s
+
+.order-wrap
+  .total
+      display flex
+      justify-content space-between
+      font-weight 600
+      padding 10px 0
+      border-bottom 3px solid black
+      border-top 3px double black
+
+.order-title
+  text-align center
+
+// Menu Styles
+.menu
+  float left
+  border 2px solid black
+  padding-bottom 2rem
+  padding-top 2rem
+  margin-bottom 5px
+  clear both
+  overflow hidden
+  p
+    margin 0
+    font-size 1.8rem
+  display flex
+  flex-flow column;
+  align-items center;
+  width 100%
+
+.menu-item
+  margin 10px
+  padding 30px
+  width 100px
+
+.table-content
+  display flex
+  justify-content center
+
+.table-left
+  margin-right 20px
+  margin-top 20px
+  display flex
+  width 10%
+
+.jsonViewer
+  resize none
+.row
+  margin 10px
+
+.mr5
+  margin-right 5px
+
+.ml20
+  margin-left 20px
+
+button, input[type=submit]
+  text-transform uppercase
+  background none
+  border 1px solid black
+  font-weight 600
+  font-size 1.5rem
+  font-family sans-serif
+  transition all 0.2s
+  position relative
+  z-index 2
+  &[disabled]
+    color red
+    background white
+    border-color red
+    &:hover
+      color red
+      cursor not-allowed
+    &:after
+      display none
+  &:after
+    content ''
+    z-index -1
+    display block
+    background black
+    position absolute
+    width 100%
+    height 0
+    left 0
+    top 0
+    transition all 0.2s
+  &:hover, &:focus
+    color white
+    outline 0
+    &:after
+      height 100%
+  // variants
+  &.warning
+    &:after
+      background red
+  &.success
+    &:after
+      background green
+
+  &.github, &.facebook, &.twitter
+    border 0
+    display block
+    margin-bottom 2rem
+    width 100%
+    color white
+    padding 2rem
+
+  &.github
+    background #82D465
+    &:after
+      background darken(#82D465, 20%)
+
+  &.facebook
+    background #3864A3
+    &:after
+      background darken(#3864A3, 20%)
+
+  &.twitter
+    background #5EA9DD
+    &:after
+      background darken(#5EA9DD, 20%)
+
+.gero
+  float left
