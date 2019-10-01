@@ -1,12 +1,13 @@
 import React from "react";
 import { Form } from "react-final-form";
-
+import Cookies from 'universal-cookie';
+import Beautify from 'json-beautify';
 class App extends React.Component {
   state = {
     sessionData: {},
     formData: {}
-  };
-
+  }; 
+  
   sessionIDRef = React.createRef();
   domainRef = React.createRef();
   DFTRef = React.createRef();
@@ -27,11 +28,21 @@ class App extends React.Component {
       step: key
     };
     
-    fetch("https://api.myjson.com/bins/lddf1")
+    const cookies = new Cookies();
+    cookies.remove('ASP.NET_SessionId');
+    cookies.set('ASP.NET_SessionId', `${info.sessionID}`, { path: '/'});  
+    const headersTest = new Headers();
+    headersTest.set("Cookie", `ASP.NET_SessionId=${info.sessionID}; path=/; domain=localhost; Expires=Tue, 19 Jan 2038 03:14:07 GMT;`);
+
+    fetch(`http://localhost:49506/Session/GetCurrentSessionFacadeValue?ssi=3&value=Flight.Step${info.step}AsJson`,{     
+      method: 'GET',
+      headers: headersTest,
+      credentials:'include'
+    })    
       .then(res => res.json())
       .then(
         (result) => {
-          this.setSessionData(result);
+          this.setSessionData(Beautify(result, null, 2, 100));
           this.setFormData(info);
         },
         (error) => {
@@ -43,7 +54,7 @@ class App extends React.Component {
 
   setSessionData = (aux) => {
     const sessionData = { ...this.state.sessionData };
-    sessionData[0] = JSON.stringify(aux);
+    sessionData[0] = aux;
     this.setState({ sessionData });
   };
 
